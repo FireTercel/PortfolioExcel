@@ -45,6 +45,17 @@ public class ExcelWriter {
 	private HSSFWorkbook wb;
 	private HSSFSheet sheet;
 	private HSSFRow row;
+	private Map<Integer,BaseBean>  exceptionBeans;//存放异常对象集合
+	
+	
+
+	public Map<Integer, BaseBean> getExceptionBeans() {
+		return exceptionBeans;
+	}
+
+	public void setExceptionBeans(Map<Integer, BaseBean> exceptionBeans) {
+		this.exceptionBeans = exceptionBeans;
+	}
 
 	public ExcelWriter() {
 
@@ -207,6 +218,8 @@ public class ExcelWriter {
 			e.printStackTrace();
 		}
 	}
+	
+
 
 	/**
 	 * 获得Excel文件中，总包号码字段，保存在一个数组String[]里面
@@ -360,11 +373,17 @@ public class ExcelWriter {
 			baseBean[i].setRemark(infos[7]);
 			baseBean[i].setPack_bar_code(infos[8]);
 			
+			PackObject packObj=new PackObject();
+			
+			/*
+			 * 不管总包条码长度是否为30，都对packObject进行赋值
+			 * 只是如果长度不为30，则无法对packObject的属性进行赋值。
+			 */
 			if(infos[8].length()==30){
 				
 				baseBean[i].setFlag(true);
-				PackObject packObj=new PackObject();
-				baseBean[i].setPackobject(packObj);
+				
+				baseBean[i].setPackobject(packObj);//赋值。
 				
 				baseBean[i].getPackobject().setSourceOffice(infos[8].substring(0, 8));
 				baseBean[i].getPackobject().setAimOffice(infos[8].substring(8, 16));
@@ -375,6 +394,7 @@ public class ExcelWriter {
 				
 			}else{
 				baseBean[i].setFlag(false);
+				baseBean[i].setPackobject(packObj);//赋值。
 				
 			}
 			
@@ -427,11 +447,14 @@ public class ExcelWriter {
 			codetrees = codeInit.initCodeForOutPro();
 		}
 
+		/*
+		 * 参数对象，保存参数信息。
+		 */
 		PackObject[] packObj = packObjects;
 		// 参数->总包类中对象的数量。
 		int numObj = packObj.length;
 		boolean flag = false;
-		int codenum = codetrees.length;
+		int codenum = codetrees.length;//长度==44、32、19
 
 		for (int k = 0; k < numObj; k++) {
 			flag = false;
@@ -472,7 +495,10 @@ public class ExcelWriter {
 	 */
 	public CodeTree[] countBaseBean(BaseBean[] baseBean, String conn) {
 		CodeInit codeInit = new CodeInit();
-
+		
+		/*
+		 * 根据不同条件，初始化codeTree对象，为其赋值。
+		 */
 		CodeTree[] codetrees = null;
 
 		if (conn.equals("GD")) {
@@ -483,17 +509,65 @@ public class ExcelWriter {
 			codetrees = codeInit.initCodeForOutPro();
 		}
 		
+		/*
+		 * 存放异常总包基本信息。如：总包条码非30位号码，取其前面的总包号码，原寄局，寄达局，详情单号码等。
+		 */
+		Map<Integer,BaseBean> exceptionMap=new HashMap<Integer,BaseBean>();
+		
+		/*
+		 * 传入参数baseBean
+		 */
 		BaseBean[] baseBeans=baseBean;
-		// 参数->总包类中对象的数量。
-		int numObj = baseBeans.length;
+		
+		/*
+		 * 参数，即总包基本信息类中对象的数量。
+		 */
+		int numBean = baseBeans.length;
 		boolean flag = false;
 		int codenum = codetrees.length;
+		int numException=1;//从1开始，统计异常总包条码的数量
 		
-		for(int i=0;i<baseBean.length;i++){
-			baseBean[i].getPack_bar_code();
+		/*
+		 * 遍历每一条总包基本信息，根据初始化的codeTree对象，查找相关机构代码，匹配到codeTree对象中。
+		 */
+		for(int k=0;k<numBean;k++){
+			if(baseBean[k].isFlag()==true){
+				flag = false;
+				for (int i = 0; i < codenum; i++) {
+					if (flag == true) {
+						break;
+					}
+					if (i < codenum - 1) {
+						String[] subNames = codetrees[i].getSubNames();
+						for (int j = 0; j < subNames.length; j++) {
+							if (baseBean[k].getPackobject().getAimOffice().equals(subNames[j])) {
+								codetrees[i].setCount(codetrees[i].getCount() + 1);
+								codetrees[i].setWeights(codetrees[i].getWeights()
+										+ baseBean[k].getPackobject().getWeight());
+								flag = true;
+								break;
+							}
+						}
+						
+					} else if (i == (codenum - 1)) {
+						
+						codetrees[codenum - 1].setCount(codetrees[codenum - 1]
+								.getCount() + 1);
+						codetrees[codenum - 1].setWeights(codetrees[codenum - 1]
+								.getWeights() + baseBean[k].getPackobject().getWeight());
+						break;
+					}
+				}
+				
+			}else if(baseBean[k].isFlag()==false){
+				exceptionMap.put(numException, baseBean[k]);
+				numException++;
+			}
+			
+			
 		}
 		
-		
+		this.setExceptionBeans(exceptionMap);
 		
 		return codetrees;
 		

@@ -371,7 +371,7 @@ public class CodeInit {
 		codetrees[41].setCount(0);
 		codetrees[41].setWeights(0);
 		// ---------------------------------------
-		// 未知的事物，总是让人感到恐惧。
+		// 中山三角。
 		codetrees[42] = new CodeTree();
 		codetrees[42].setNodeName("中山三角");
 		String[] subNames42 = {"52840100"};

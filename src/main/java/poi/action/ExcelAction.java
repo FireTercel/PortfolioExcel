@@ -147,6 +147,7 @@ public class ExcelAction {
 					"", "济南", "", "昆明", "", "西安", "", "武汉", "", "郑州", "", "南昌",
 					"", "南宁", "", "贵阳", "", "福州", "", "海口", "", "棠溪1", "",
 					"棠溪2", "", "中山三角", "", "未知", "" };
+			String[] title2={"异常邮件信息"};
 
 			// 重新写入Excel文件标题
 			String url = fileCreate.createFile();
@@ -157,16 +158,22 @@ public class ExcelAction {
 				OutputStream os = new FileOutputStream(fileUrl);
 				excelWriter = new ExcelWriter(os);
 				excelWriter.writeExcelTitle(title_gd);
+				// 写入第二个Sheet标题
+				String sheetName="总包汇总";
+				excelWriter.writeExcelTItleForSheet2(title2,sheetName);
 			}else if(conn.equals("SJ")){
 				fileUrl = fileCreate.createFile(url, "省际汇总") + "\\"
 						+ "省际邮路监控.xls";
 				OutputStream os = new FileOutputStream(fileUrl);
 				excelWriter = new ExcelWriter(os);
 				excelWriter.writeExcelTitle(title_sj);
+				// 写入第二个Sheet标题
+				String sheetName="总包汇总";
+				excelWriter.writeExcelTItleForSheet2(title2,sheetName);
 			}
-
+			
 			// -----------------------------------------------------------------------
-
+			
 			// 读取Excel文件内容
 			InputStream inputStream = null;
 			// 保存初始Excel内容
@@ -180,7 +187,9 @@ public class ExcelAction {
 			HashMap<String, Integer> aimCountMap = null;
 			// 保存最终结果
 			Map<Integer, String> endContent = new HashMap<Integer, String>();
-
+			Map<Integer,String> exceptionContent=new HashMap<Integer,String>();
+			int numExceptionContent=1;
+			
 			for (int i = 0; i < allExcelFiles.length; i++) {
 				inputStream = new FileInputStream(fileURL + allExcelFiles[i]);
 				// 单个Excel文件内容
@@ -191,27 +200,42 @@ public class ExcelAction {
 				baseBean=excelWriter.getBaseBeanForContent(content, fileUrl);
 				System.out.println("BaseBean数组长度："+baseBean.length);
 				
-				// 寄达局统计
-				CodeTree[] codetrees = excelWriter.countPackObject(packObjects,
-						conn);
+				// 寄达局统计——旧方法。
+				//CodeTree[] codetrees = excelWriter.countPackObject(packObjects,conn);
+				
+				//新方法。
+				CodeTree[] codetrees =excelWriter.countBaseBean(baseBean, conn);
+				
+				Map<Integer,BaseBean> exceptionMap=excelWriter.getExceptionBeans();
+				
+				if(exceptionMap.size()>0){
+					exceptionContent.put(numExceptionContent, allExcelFiles[i]);
+					numExceptionContent++;
+					for(int j=1;j<exceptionMap.size();j++){
+						String exceptionStr="异常对象："+exceptionMap.get(j);
+						System.out.println(exceptionStr);
+						exceptionContent.put(numExceptionContent, exceptionStr);
+						numExceptionContent++;
+					}
+					
+				}
+				
 
-				//打印codeInit内容
-				/*for (int j = 0; j < codetrees.length; j++) {
-					System.out.println(codetrees[j].toString());
-				}*/
+				
 				// 每行保存结果
 				String endString = excelWriter.getEachExcelPackObject(
 						codetrees, allExcelFiles[i]); 
 				endContent.put(i + 1, endString);
-
+				
 			}
+			excelWriter.writeExcelContentForSheet2(exceptionContent, fileUrl);
 			excelWriter.writeExcelContent(endContent, fileUrl,"style"); 
-
+			
 		} catch (FileNotFoundException e) {
 			System.out.println("未找到指定路径的文件!");
 			e.printStackTrace();
 		} 
-
+		
 	}
 	
 	/** 
