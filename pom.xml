@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ems.project</groupId>
 	<artifactId>PortfolioExcel</artifactId>
-	<version>1.2.2</version>
+	<version>1.3.0</version>
 	<!-- 1.2.0v 该版本，对excel中的非总包号码进行排查，例如存在详情单号码的，自动匹配到“未知”处。 -->
 	<name>PortfolioExcel Maven Webapp</name>
 	<url>http://maven.apache.org</url>

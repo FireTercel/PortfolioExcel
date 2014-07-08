@@ -35,7 +35,7 @@ public class AboutUI {
 	}
 
 	public static void addComponentsToPane(Container pane) {
-		jlabel = new JLabel("版权所有 翻版必究        版本：1.2.1v", JLabel.CENTER);
+		jlabel = new JLabel("版权所有 翻版必究        版本：1.3.0v", JLabel.CENTER);
 		pane.add(jlabel);
 
 		
