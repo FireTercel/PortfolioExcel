@@ -159,7 +159,7 @@ public class ExcelAction {
 				excelWriter = new ExcelWriter(os);
 				excelWriter.writeExcelTitle(title_gd);
 				// 写入第二个Sheet标题
-				String sheetName="总包汇总";
+				String sheetName="异常汇总";
 				excelWriter.writeExcelTItleForSheet2(title2,sheetName);
 			}else if(conn.equals("SJ")){
 				fileUrl = fileCreate.createFile(url, "省际汇总") + "\\"
@@ -168,7 +168,7 @@ public class ExcelAction {
 				excelWriter = new ExcelWriter(os);
 				excelWriter.writeExcelTitle(title_sj);
 				// 写入第二个Sheet标题
-				String sheetName="总包汇总";
+				String sheetName="异常汇总";
 				excelWriter.writeExcelTItleForSheet2(title2,sheetName);
 			}
 			
@@ -211,7 +211,7 @@ public class ExcelAction {
 				if(exceptionMap.size()>0){
 					exceptionContent.put(numExceptionContent, allExcelFiles[i]);
 					numExceptionContent++;
-					for(int j=1;j<exceptionMap.size();j++){
+					for(int j=1;j<=exceptionMap.size();j++){
 						String exceptionStr="异常对象："+exceptionMap.get(j);
 						System.out.println(exceptionStr);
 						exceptionContent.put(numExceptionContent, exceptionStr);

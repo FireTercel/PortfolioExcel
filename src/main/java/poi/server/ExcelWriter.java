@@ -555,6 +555,8 @@ public class ExcelWriter {
 								.getCount() + 1);
 						codetrees[codenum - 1].setWeights(codetrees[codenum - 1]
 								.getWeights() + baseBean[k].getPackobject().getWeight());
+						exceptionMap.put(numException, baseBean[k]);
+						numException++;
 						break;
 					}
 				}
