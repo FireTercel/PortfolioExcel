@@ -19,7 +19,7 @@ public class ReadExcel {
 		Sheet sheet = wb.getSheetAt(0); 
 		// 这个必须用接口 
 		for (Row row : sheet) {
-			for (Cell cell : row) {
+			for (Cell cell : row) { 
 				// cell.getCellType是获得cell里面保存的值的type
 				// 如Cell.CELL_TYPE_STRING
 				switch (cell.getCellType()) {

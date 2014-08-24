@@ -25,7 +25,7 @@ public class InstrumentUI {
 	 
 	public static void createUI() { 
 		// 主层 
-		jFrame = new JFrame("工具");
+		jFrame = new JFrame("录取通知书");
 		jFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		addComponentsToPane(jFrame.getContentPane()); 
 		

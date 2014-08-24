@@ -243,7 +243,7 @@ public class ExcelAction {
 	 */
 	public void providerOutFlowDire(String conn,String filesUrl){
 		try{
-			ExcelReader excelReader = new ExcelReader();
+			ExcelReader excelReader = new ExcelReader(); 
 			ExcelWriter excelWriter = new ExcelWriter();
 			FileFormat fileFormat = new FileFormat();
 			FileCreate fileCreate = new FileCreate();

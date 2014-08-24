@@ -43,8 +43,9 @@ public class DealExcelUI {
 	private static JMenuItem fileExit;// 关闭
 	
 	private static JMenu configure;//工具
-	private static JMenuItem printPrivoder;
-	private static JMenuItem printPostroad;
+	private static JMenuItem univerOffer;//录取通知书
+	private static JMenuItem printPostroad;//省际出口流量
+	private static JMenuItem fullProcess;//全程跟踪信息。
 	
 	private static JMenu aboutM;//关于
 	private static JMenuItem about;
@@ -180,10 +181,12 @@ public class DealExcelUI {
 		
 		//关于
 		configure=new JMenu("工具");
-		printPrivoder=new JMenuItem("省份");
+		univerOffer=new JMenuItem("录取通知书");
 		printPostroad=new JMenuItem("省际出口流量");
-		configure.add(printPrivoder);
+		fullProcess=new JMenuItem("全程跟踪");
+		configure.add(univerOffer);
 		configure.add(printPostroad);
+		configure.add(fullProcess);
 		menuBar.add(configure);
 		
 		
@@ -325,14 +328,19 @@ public class DealExcelUI {
 		});
 		
 		
-		//
-		/*printPrivoder.addActionListener(new ActionListener(){
+		/**
+		 * 录取通知书弹出方法。
+		 */
+		univerOffer.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				InstrumentUI instrumentUI=new InstrumentUI();
 				instrumentUI.createUI();
 			}
-		});*/
+		});
 		
+		/**
+		 * 省际出口流量
+		 */
 		printPostroad.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				PostroadUI postroadUI=new PostroadUI();
@@ -340,6 +348,19 @@ public class DealExcelUI {
 			}
 		});
 		
+		/**
+		 * 全程跟踪信息。
+		 */
+		fullProcess.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				FullProcessUI fpUI=new FullProcessUI();
+				fpUI.createUI();
+			}
+		});
+		
+		/**
+		 * 关于
+		 */
 		about.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				AboutUI aboutUI=new AboutUI();

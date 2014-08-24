@@ -37,15 +37,15 @@ import poi.fileUitl.FileFormat;
  * 
  * @author 唐东宇
  * 
- */
+ */ 
 public class ExcelWriter {
 	@SuppressWarnings("unused")
-	private POIFSFileSystem fs;
-	private OutputStream os;
-	private HSSFWorkbook wb;
-	private HSSFSheet sheet;
-	private HSSFRow row;
-	private Map<Integer,BaseBean>  exceptionBeans;//存放异常对象集合
+	public POIFSFileSystem fs;
+	public OutputStream os;
+	public HSSFWorkbook wb;
+	public HSSFSheet sheet;
+	public HSSFRow row;
+	public Map<Integer,BaseBean>  exceptionBeans;//存放异常对象集合
 	
 	
 
