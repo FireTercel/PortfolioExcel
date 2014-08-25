@@ -24,8 +24,8 @@ public class FullProcessAction {
 	 * 获得邮件封发到中山三角的封发局信息
 	 */
 	public void getDispatchingOfficeExcel(String filesUrl){
-		FullProcessReader fpReader=null;
-		FullProcessWriter fpWriter=null;
+		FullProcessReader fpReader=new FullProcessReader();
+		FullProcessWriter fpWriter=new FullProcessWriter();
 		
 		FileCreate fileCreate = new FileCreate();
 		
@@ -59,7 +59,7 @@ public class FullProcessAction {
 			// 保存最终结果
 			Map<Integer, String> endContent = new HashMap<Integer, String>();
 			
-			fpReader=(FullProcessReader)new ExcelReader();
+			//fpReader=(FullProcessReader)new ExcelReader();
 			
 			//获得文件夹所有Excel
 			content=fpReader.readAllExcelContent(fileURL, "ALL");

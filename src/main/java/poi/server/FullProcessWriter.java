@@ -14,13 +14,13 @@ import poi.bean.FullProcessBean;
 
 public class FullProcessWriter extends ExcelWriter {
 	
-	private POIFSFileSystem fs;
+	/*private POIFSFileSystem fs;
 	private OutputStream os;
 	private HSSFWorkbook wb;
 	private HSSFSheet sheet;
 	private HSSFRow row;
 	private Map<Integer,BaseBean>  exceptionBeans;//存放异常对象集合
-	
+*/	
 	public FullProcessWriter(){
 		
 	}
@@ -76,28 +76,39 @@ public class FullProcessWriter extends ExcelWriter {
 		String conditionOne="发往广东省邮政速递物流有限公司中山三角邮件处理中心";
 		String conditionTwo="国内出口邮件封发";
 		FullProcessBean[] fpBeans=fpBean;
-		FullProcessBean[] fpb=null;
+		FullProcessBean[] fpb=new FullProcessBean[5000];
 		int index=0;
 		
 		for(int i=0;i<fpBeans.length;i++){
 			//1、判断条件一是否成立？
 			String dealState=fpBeans[i].getDealState();
-			if(dealState.substring(0, 25).equals(conditionOne)){
-				//2、判断条件二是否成立？
-				String dealAction=fpBeans[i].getDealAction();
-				if(dealAction.substring(0, 8).equals(conditionTwo)){
-					fpb[index]=new FullProcessBean();
-					fpb[index].setMailNum(fpBeans[i].getMailNum());
-					fpb[index].setDealTime(fpBeans[i].getDealTime());
-					fpb[index].setDealLocation(fpBeans[i].getDealLocation());
-					fpb[index].setDealAction(fpBeans[i].getDealAction());
-					fpb[index].setComment(fpBeans[i].getComment());
+			if(dealState.length()>=25){
+				if(dealState.substring(0, 25).equals(conditionOne)){
+					//2、判断条件二是否成立？
+					String dealAction=fpBeans[i].getDealAction();
+					if(dealAction.length()>=8){
+						if(dealAction.substring(0, 8).equals(conditionTwo)){
+							fpb[index]=new FullProcessBean();
+							fpb[index].setMailNum(fpBeans[i].getMailNum());
+							fpb[index].setDealTime(fpBeans[i].getDealTime());
+							fpb[index].setDealLocation(fpBeans[i].getDealLocation());
+							fpb[index].setDealAction(fpBeans[i].getDealAction());
+							fpb[index].setDealState(fpBeans[i].getDealState());
+							fpb[index].setComment(fpBeans[i].getComment());
+							
+							index++;
+							
+						}
+					}else{
+						continue;
+					}
 					
-					index++;
 					
 				}
-				
+			}else{
+				continue;
 			}
+			
 			
 		}
 		
@@ -117,19 +128,25 @@ public class FullProcessWriter extends ExcelWriter {
 		Map<Integer, String> endContent = new HashMap<Integer, String>();
 		// 返回结果
 		String str = "";
-		
-		for(int i=0;i<fpBeans.length;i++){
+		int fplength=fpBeans.length ;
+		for(int i=0;i<fplength;i++){
+			if(fpBeans[i]==null){
+				System.out.println("实际数量： "+i+" 条。");
+				break;
+			}else {
+				StringBuffer sbuffer = new StringBuffer();
+				
+				sbuffer.append(fpBeans[i].getMailNum()+"/" );
+				sbuffer.append(fpBeans[i].getDealLocation()+"/");
+				sbuffer.append(fpBeans[i].getDealAction()+"/");
+				sbuffer.append(fpBeans[i].getDealState()+"/");
+				
+				String endString = sbuffer.toString();
+				
+				endContent.put(i + 1, endString);
+			}
 			
-			StringBuffer sbuffer = new StringBuffer();
 			
-			sbuffer.append(fpBeans[i].getMailNum()+"/" );
-			sbuffer.append(fpBeans[i].getDealLocation()+"/");
-			sbuffer.append(fpBeans[i].getDealAction()+"/");
-			sbuffer.append(fpBeans[i].getDealState()+"/");
-			
-			String endString = sbuffer.toString();
-			
-			endContent.put(i + 1, endString);
 			
 			
 		}
