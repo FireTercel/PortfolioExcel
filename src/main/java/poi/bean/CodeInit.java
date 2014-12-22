@@ -41,8 +41,8 @@ public class CodeInit {
 		codetrees[1].setWeights(0);
 		// ---------------------------------------
 		codetrees[2] = new CodeTree();
-		codetrees[2].setNodeName("阳江");
-		String[] subNames02 = { "52950000" };
+		codetrees[2].setNodeName("阳江 阳春");
+		String[] subNames02 = { "52950000","52960000" };
 		codetrees[2].setSubNames(subNames02);
 		codetrees[2].setCount(0);
 		codetrees[2].setWeights(0);
@@ -142,7 +142,7 @@ public class CodeInit {
 		codetrees[16] = new CodeTree();
 		codetrees[16].setNodeName("深圳");
 		//深圳 深圳国际
-		String[] subNames16 = { "51800000","51805300" };
+		String[] subNames16 = { "51800000","51805300","51805000" };
 		codetrees[16].setSubNames(subNames16);
 		codetrees[16].setCount(0);
 		codetrees[16].setWeights(0);
@@ -767,7 +767,7 @@ public class CodeInit {
 				"52830000", "51000000", "51140000", "52840000", "51150000",
 				"51200000", "52300000", "51800000", "51600000", "51660000",
 				"52100000", "52200000", "51530000", "51500000", "51400000",
-				"51700000", "51160000", "51300000", "51900000" ,"51003100","51805300"};
+				"51700000", "51160000", "51300000", "51900000" ,"51003100","51805300","51805000"};
 		codetrees[0].setSubNames(subNames00);
 		codetrees[0].setCount(0);
 		codetrees[0].setWeights(0);

@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Build-Jdk: 1.7.0_17
+Built-By: Administrator
+Created-By: Apache Maven
+Main-Class: poi.ui.DealExcelUI
+Archiver-Version: Plexus Archiver
+

@@ -22,7 +22,7 @@ public class FullProcessWriter extends ExcelWriter {
 	private Map<Integer,BaseBean>  exceptionBeans;//存放异常对象集合
 */	
 	public FullProcessWriter(){
-		
+		 
 	}
 	
 	public FullProcessWriter(OutputStream os){

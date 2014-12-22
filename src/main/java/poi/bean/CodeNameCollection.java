@@ -16,6 +16,8 @@ public class CodeNameCollection {
 	
 	public static final String gd_52950000="阳江"; 
 	
+	public static final String gd_52960000="阳春"; 
+	
 	public static final String gd_52730000="云浮";
 	
 	public static final String gd_52600000="肇庆";
@@ -43,6 +45,8 @@ public class CodeNameCollection {
 	public static final String gd_52300000="东莞";
 	
 	public static final String gd_51800000="深圳";
+	
+	public static final String gd_51805000="深圳";
 	
 	public static final String gd_51600000="惠州";
 	

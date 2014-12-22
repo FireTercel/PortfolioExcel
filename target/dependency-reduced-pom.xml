@@ -4,7 +4,7 @@
   <groupId>com.ems.project</groupId>
   <artifactId>PortfolioExcel</artifactId>
   <name>PortfolioExcel Maven Webapp</name>
-  <version>1.3.0</version>
+  <version>1.3.1</version>
   <url>http://maven.apache.org</url>
   <build>
     <finalName>PortfolioExcel</finalName>
